@@ -13,7 +13,7 @@ class Sampler extends ArrayList<Sample>{
   
   public Sampler () {
     super(512);
-    fill(0.0);
+    init(0.0);
     
   }
   
@@ -21,12 +21,13 @@ class Sampler extends ArrayList<Sample>{
     super(w);
     window=w;
     col=c;
+    init(0.5);
   }
   
-  privat fill(){
+  synchronized public void init(float init){
     clear();
-    for(int i;i<window;I++)
-    add(new Sample(millis(),0.5};
+    for(int i=0;i<window;i++)
+    add(new Sample(millis(),init));
   }
   
   synchronized public Sampler addSample(float t,float val){

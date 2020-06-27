@@ -11,7 +11,7 @@ KetaiVibrate vibe;
 
 AutoCorrelator auto;
 
-Sampler samplerR, samplerG;
+Sampler samplerR, samplerG,samplerB;
 
 Floar floar=new Floar(10, 0.5);
 
@@ -45,6 +45,7 @@ void setup() {
   cam = new KetaiCamera(this, 320, 240, 24);
   samplerG =new Sampler(123, 0x66ff66);
   samplerR=new Sampler(123, 0xff6666);
+  samplerB=new Sampler(123, 0x6666ff);
   auto=new AutoCorrelator(90);
   cam.setCameraID(1);
   cam.manualSettings();
@@ -67,7 +68,8 @@ void draw() {
     // rect(0,0,width/4,k1);
     float r=rate.get(3);
     float bpm= 60.0*( r/15);
-    text(" "+nf(frameRate,2,1)+" "+nf(bpm, 2, 1) ,width/2, height-3*k1);
+    text(" "//+nf(frameRate,2,1)+" "
+    +nf(bpm, 2, 1) ,width/2, height-3*k1);
     text(" "+nf (period, 2, 2)+" "+nf(conf, 0, 1)+" #"+pp, width/2, height-k1);
     //  cam.read();
     translate(width-picheight/2, picwidth/2);
@@ -81,6 +83,7 @@ void draw() {
   popMatrix();
   samplerG.draw();
   samplerR.draw();
+  samplerB.draw();
   drawUI();
 }
 
@@ -102,6 +105,7 @@ void onCameraPreviewEvent()
     float cconf=(float)auto.getConfidence();
     if(cconf>0.8) rate.addSample(pperiod,cconf*0.5);
     //vibe.vibrate(50);
+    samplerB.addSample(t/10,rate.get(3)*4);
     if (cconf>0.8||cconf>conf){
       period=pperiod;
     }
