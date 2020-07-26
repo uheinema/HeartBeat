@@ -1,8 +1,12 @@
 
 
+
+
+
+
 void mousePressed()
 {
-  if(mouseY<k4||mouseY>k5) return;
+  if (mouseY<k4||mouseY>k5) return;
   //Toggle Camera on/off
   if (mouseX < width/3 )
   {
@@ -19,8 +23,8 @@ void mousePressed()
     {
       cam.setCameraID((cam.getCameraID() + 1 ) % cam.getNumberOfCameras());
       cam.manualSettings();
-  //cam.start();
-  //println(cam.dump());
+      //cam.start();
+      //println(cam.dump());
     }
   }
 
@@ -71,4 +75,27 @@ void drawUI()
   popStyle();
 }
 
+
+private boolean loadExternalSketch(String filePath) {
+  //Try to get the file...
+  File file = new File(filePath);
+
+  String ext = "";
+  int lastDot = filePath.lastIndexOf('.');
+  if (lastDot != -1) {
+    ext = filePath.substring(lastDot);
+  }
+
+  // Is this a good file?
+  if (ext.equalsIgnoreCase(".pde") && file.exists() && !file.isDirectory()) {
+    // Let's get the sketch folder...
+    File sketchFolder = file.getParentFile();
+    // Here goes...
+   // loadSketch(sketchFolder.getAbsolutePath(), APDE.SketchLocation.EXTERNAL);
+   // message(getGlobalState().getString(R.string.sketch_load_external_success));
+    return true;
+  }
+
+  return false;
+}
 
